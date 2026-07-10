@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Secure Checkout. Enter billing details and shipping address to place order. Integrated with Razorpay standard secure payments.">
+  <title>Checkout | Adwait Pure Desi Ghee</title>
+  
+  <link rel="stylesheet" href="css/style.css?v=43">
+  <link rel="stylesheet" href="css/animations.css?v=43">
+  <link rel="stylesheet" href="css/responsive.css?v=43">
+  <link rel="canonical" href="https://adwaitghee.com/checkout.html">
+  <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+  <div class="paper-texture"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-ticker">
+      <span class="announcement-ticker-item">🥛 FRESHLY MADE TO ORDER</span>
+      <span class="announcement-ticker-item">FREE SHIPPING PAN-INDIA</span>
+      <span class="announcement-ticker-item">COD ONLY IN MUMBAI</span>
+      <!-- Duplicate for infinite marquee loop -->
+      <span class="announcement-ticker-item">🥛 FRESHLY MADE TO ORDER</span>
+      <span class="announcement-ticker-item">FREE SHIPPING PAN-INDIA</span>
+      <span class="announcement-ticker-item">COD ONLY IN MUMBAI</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <!-- Logo -->
+      <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 0.5rem; height: 100%;">
+        <img src="images/logo.png" alt="Adwait Pure Desi Ghee Logo" style="height: 48px; width: 48px; object-fit: contain; border-radius: 50%;">
+        <span class="logo-text" style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--color-dark); letter-spacing: 0.15em;">ADWAIT</span>
+      </a>
+      
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        
+        <li class="nav-item"><a href="about.html" class="nav-link">Our Story</a></li>
+        <li class="nav-item"><a href="process.html" class="nav-link">The Bilona Method</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Journal</a></li>
+        <li class="nav-item"><a href="faq.html" class="nav-link">FAQs</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="action-icon-btn cart-toggle" aria-label="Open Shopping Bag">
+          👜
+          <span class="badge-count cart-count">0</span>
+        </button>
+        <button class="menu-btn" aria-label="Toggle Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Checkout Page Top Title -->
+  <section class="about-hero" style="padding: 4rem 0;">
+    <div class="container" style="max-width: 800px; text-align: center;">
+      <span class="text-gold" style="font-size: 0.85rem; letter-spacing: 0.2em; display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 600;">Secure Gate</span>
+      <h1 style="font-size: 3rem; font-family: var(--font-serif); font-weight: 300; letter-spacing: 0.05em; color: var(--color-secondary); margin: 0;">Order Checkout</h1>
+      <p style="color: #cbb8ac; font-size: 0.95rem; margin-top: 0.5rem; font-family: var(--font-serif); font-style: italic; margin-bottom: 0;">"Complete your details below to finalize your order. Encrypted standard secure payments."</p>
+    </div>
+  </section>
+
+  <!-- Checkout Grid Section -->
+  <section class="section-padding" style="background-color: var(--color-bg);">
+    <div class="container">
+      <div class="grid-2" style="align-items: flex-start; gap: var(--spacing-lg);">
+        
+        <!-- Left Side: Shipping Address Form -->
+        <div class="reveal" style="background: white; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-premium);">
+          <h2 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; color: var(--color-dark);">Shipping Address</h2>
+          
+          <form id="checkout-form">
+            <div class="grid-2" style="gap: var(--spacing-xs); margin-bottom: 0.5rem;">
+              <div class="form-group">
+                <label for="first-name" class="form-label">First Name</label>
+                <input type="text" id="first-name" class="form-control" placeholder="e.g. Rahul" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name" class="form-label">Last Name</label>
+                <input type="text" id="last-name" class="form-control" placeholder="e.g. Kumar" required>
+              </div>
+            </div>
+
+            <div class="grid-2" style="gap: var(--spacing-xs); margin-bottom: 0.5rem;">
+              <div class="form-group">
+                <label for="phone" class="form-label">Mobile Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="10-digit mobile" required>
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="rahul@domain.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address" class="form-label">Street Address</label>
+              <input type="text" id="address" class="form-control" placeholder="Flat No., House/Apartment Name, Area" required>
+            </div>
+
+            <div class="grid-3" style="gap: var(--spacing-xs); margin-bottom: 0.5rem;">
+              <div class="form-group" style="position: relative;">
+                <label for="pincode" class="form-label">Pin Code</label>
+                <div style="display: flex; gap: 0.2rem;">
+                  <input type="text" id="pincode" class="form-control" placeholder="6 digits" required style="padding: 0.8rem 0.5rem; text-align: center;">
+                  <button type="button" id="pincode-check-btn" class="btn btn-outline-gold" style="padding: 0.4rem 0.8rem; border-radius: var(--border-radius-full); font-size: 0.8rem; white-space: nowrap;">Check</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="city" class="form-label">City</label>
+                <input type="text" id="city" class="form-control" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <label for="state" class="form-label">State</label>
+                <input type="text" id="state" class="form-control" placeholder="State" required>
+              </div>
+            </div>
+
+            <!-- Shiprocket delivery feedback status box -->
+            <div id="shiprocket-feedback" style="display: none; padding: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md); font-size: 0.85rem; line-height: 1.4;"></div>
+
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin: 1.5rem 0 1rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem; color: var(--color-dark);">Payment Method</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">All transactions are secure and encrypted. COD is only available for Mumbai addresses.</p>
+            
+            <!-- Online Option -->
+            <div style="display: flex; gap: 0.5rem; align-items: center; background: var(--color-bg); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--color-primary); margin-bottom: 0.75rem;">
+              <input type="radio" name="payment-method" id="pay-online" value="online" checked style="accent-color: var(--color-primary);">
+              <label for="pay-online" style="font-size: 0.95rem; font-weight: 500; cursor: pointer;">Pay securely with Cards / Netbanking / UPI (Razorpay)</label>
+            </div>
+
+            <!-- COD Option (Hidden by default, shown for Mumbai) -->
+            <div id="cod-payment-container" style="display: none; gap: 0.5rem; align-items: center; background: var(--color-bg); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--color-border); margin-bottom: 1.5rem;">
+              <input type="radio" name="payment-method" id="pay-cod" value="cod" style="accent-color: var(--color-primary);">
+              <label for="pay-cod" style="font-size: 0.95rem; font-weight: 500; cursor: pointer;">Cash on Delivery (COD) <span style="color: #27803B; font-weight: 600;">(Available for Mumbai)</span></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: var(--border-radius-full); font-size: 1.1rem; padding: 1rem;">Complete Payment</button>
+          </form>
+        </div>
+
+        <!-- Right Side: Order Summary Column -->
+        <div class="reveal-scale" id="checkout-summary-box" style="background: white; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-lg); height: fit-content; box-shadow: var(--shadow-premium);">
+          <!-- Populated dynamically by checkout.js -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+          <img src="images/logo.png" alt="Adwait Pure Desi Ghee Logo" style="height: 48px; width: 48px; object-fit: contain; border-radius: 50%;">
+          <span class="logo-text" style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--color-secondary); letter-spacing: 0.15em;">ADWAIT</span>
+        </a>
+        <p>Premium traditionally-crafted A2 Gir Cow Bilona Desi Ghee prepared in small batches in accordance with Vedic scriptures.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/adwait.ghee/?hl=en" class="social-icon" aria-label="Instagram" style="border: none; display: inline-flex; align-items: center; justify-content: center;">
+            <img src="images/instagram.png" alt="Instagram" style="width: 30px; height: 30px; object-fit: contain; border-radius: 6px;">
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#shop">Shop All</a></li>
+          <li><a href="process.html">Vedic Process</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="blog.html">Journal Log</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="contact.html">Bulk Orders</a></li>
+          <li><a href="checkout.html">Terms & Conditions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Contact Office</h4>
+        <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 0.5rem;">Adwait Organic Farms,<br>Sector 4, Pune - 411001</p>
+        <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 0.5rem;">Email: care@adwaitghee.com</p>
+        <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 1.5rem;">Phone: +91-98765 43210</p>
+        
+        <!-- Certifications Gallery preview -->
+        <p style="font-size: 0.75rem; color: #7b6a60; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Our Certifications</p>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; opacity: 0.75;">
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size:0.75rem; padding:0.2rem 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; border:1px solid rgba(255,255,255,0.1); color: var(--color-secondary);">FSSAI Certified</span>
+                <span style="font-size:0.75rem; padding:0.2rem 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; border:1px solid rgba(255,255,255,0.1); color: var(--color-secondary);">NPOP Organic</span>
+                <span style="font-size:0.75rem; padding:0.2rem 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; border:1px solid rgba(255,255,255,0.1); color: var(--color-secondary);">ISO 22000</span>
+              </div>
+              <span style="font-size: 0.75rem; color: #a49185; display: block; margin-top: 0.2rem;">Lic. No. 21526020000115</span>
+            </div>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Adwait Pure Desi Ghee. All rights reserved.</p>
+      <div class="footer-payments">
+        <span style="font-size:0.8rem; color:#7b6a60; margin-right: 0.5rem;">Secure Payment via Razorpay</span>
+        <!-- Payment icons mockup -->
+        <span style="font-size: 1.25rem;">💳 🏦 📱</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Payment Processing Loader Overlay -->
+  <div class="payment-loader-overlay">
+    <div class="spinner"></div>
+    <h3>Initiating Secure Payment...</h3>
+    <p>Please do not refresh the page or click back.</p>
+  </div>
+
+  <script src="js/main.js?v=43"></script>
+  <script src="js/cart.js?v=43"></script>
+  <script src="js/checkout.js?v=43"></script>
+  <script src="js/payment.js?v=43"></script>
+  <script src="js/analytics.js?v=43"></script>
+</body>
+</html>

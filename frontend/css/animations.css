@@ -1,0 +1,135 @@
+/* Luxury Animations & Transitions */
+
+/* Custom Smooth Reveal Classes (For Intersection Observer JS Fallback) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* Scale Reveal */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Native CSS Scroll-Driven Animations (Modern Browsers) */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    
+    /* Scroll entry-exit reveal for luxury cards and sections */
+    @keyframes scroll-grow {
+      from {
+        opacity: 0.3;
+        transform: translateY(50px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .scroll-reveal-item {
+      animation: scroll-grow auto linear backwards;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+
+    /* Process steps scrollytelling parallax effect */
+    @keyframes parallax-bg {
+      from { transform: translateY(-20px); }
+      to { transform: translateY(20px); }
+    }
+
+    .parallax-subject {
+      animation: parallax-bg auto linear;
+      animation-timeline: view();
+      animation-range: exit -20% enter 120%;
+    }
+  }
+
+  /* Sticky Header Shrink Scroll-Driven Animation */
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    @keyframes header-shrink {
+      to {
+        height: 65px;
+        box-shadow: 0 10px 30px rgba(56, 9, 1, 0.15);
+        background-color: var(--color-dark);
+      }
+    }
+
+    header {
+      animation: header-shrink auto linear both;
+      animation-timeline: scroll(block root);
+      animation-range: 0px 80px;
+    }
+  }
+}
+
+/* Micro-interaction Hover Effects */
+.hover-gold-grow {
+  transition: var(--transition-smooth);
+}
+
+.hover-gold-grow:hover {
+  color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Magnetic Button (JS animated helper classes) */
+.magnetic-item {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}

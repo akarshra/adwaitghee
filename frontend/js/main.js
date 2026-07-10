@@ -1,5 +1,8 @@
 /* Global Luxury UI Behaviors */
 
+// API Configuration: Change this to your production backend URL (e.g. 'https://api.yourdomain.com/backend') when deploying
+window.ADWAIT_API_BASE = 'backend';
+
 document.addEventListener('DOMContentLoaded', () => {
   initScrollBehaviors();
   initMobileMenu();

@@ -349,7 +349,8 @@ function initCheckoutFormValidation() {
         }
 
         // Send COD order to PHP backend
-        fetch('backend/create-cod-order.php', {
+        const apiBase = window.ADWAIT_API_BASE || 'backend';
+        fetch(`${apiBase}/create-cod-order.php`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -32,7 +32,8 @@ async function triggerRazorpayPayment(customerDetails) {
   const cartData = JSON.parse(localStorage.getItem('adwait_cart')) || [];
   
   // Create order on backend first to get a secure Razorpay order_id
-  fetch('backend/create-razorpay-order.php', {
+  const apiBase = window.ADWAIT_API_BASE || 'backend';
+  fetch(`${apiBase}/create-razorpay-order.php`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -63,7 +64,8 @@ async function triggerRazorpayPayment(customerDetails) {
           loader.querySelector('h3').textContent = 'Verifying Payment Authenticity...';
         }
         
-        fetch('backend/verify-payment.php', {
+        const apiBase = window.ADWAIT_API_BASE || 'backend';
+        fetch(`${apiBase}/verify-payment.php`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

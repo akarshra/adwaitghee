@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --color-primary: #E7B453;
-  --color-secondary: #FFF6E5;
-  --color-dark: #380901;
-  --color-dark-rgb: 56, 9, 1;
-  --color-bg: #FFFDF9;
-  --color-text: #444444;
-  --color-accent: #FDE282;
+  --color-primary: #D4AF37; /* Royal Gold */
+  --color-secondary: #FFF3DB; /* Ivory Gold Cream */
+  --color-dark: #2B0703; /* Imperial Dark Crimson */
+  --color-dark-rgb: 43, 7, 3;
+  --color-bg: #FCFAF5; /* Royal Parchment Background */
+  --color-text: #3D352E; /* Warm Royal Charcoal */
+  --color-accent: #E5C17B; /* Gold Accent */
   --color-white: #FFFFFF;
-  --color-gray-light: #FBF9F4;
-  --color-border: rgba(56, 9, 1, 0.08);
+  --color-gray-light: #FAF7F0;
+  --color-border: rgba(212, 175, 55, 0.25); /* Gold hairline border */
   
   --font-serif: 'Cormorant Garamond', serif;
   --font-display: 'Cinzel', serif;
@@ -22,14 +22,14 @@
   --spacing-lg: 3rem;
   --spacing-xl: 5rem;
   
-  --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  --shadow-premium: 0 15px 35px rgba(56, 9, 1, 0.04);
-  --shadow-hover: 0 25px 50px rgba(56, 9, 1, 0.08);
-  --shadow-glass: 0 8px 32px 0 rgba(56, 9, 1, 0.06);
+  --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.3, 1);
+  --shadow-premium: 0 15px 35px rgba(43, 7, 3, 0.05);
+  --shadow-hover: 0 25px 50px rgba(43, 7, 3, 0.1);
+  --shadow-glass: 0 8px 32px 0 rgba(43, 7, 3, 0.04);
   
-  --border-radius-sm: 8px;
-  --border-radius-md: 16px;
-  --border-radius-lg: 30px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 24px;
   --border-radius-full: 50px;
   
   --container-width: 1280px;
@@ -98,6 +98,33 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   max-width: 100%;
+  border: 16px solid var(--color-dark);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid var(--color-primary);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  body {
+    border: 8px solid var(--color-dark);
+  }
+  body::before {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
 }
 
 a {
@@ -200,53 +227,72 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border: 1px solid var(--color-primary);
+  background: linear-gradient(135deg, #C5A059 0%, #F3D99E 50%, #C5A059 100%);
+  color: #2B0703 !important;
+  border: 1px solid rgba(43, 7, 3, 0.15);
+  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .btn-primary::after {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: -100%;
+  width: 50%;
   height: 100%;
-  background-color: var(--color-dark);
-  z-index: -1;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-25deg);
+  z-index: 2;
+  transition: none;
 }
 
 .btn-primary:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  left: 150%;
+  transition: all 0.8s ease-in-out;
 }
 
 .btn-primary:hover {
-  color: var(--color-secondary);
-  border-color: var(--color-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4);
+  background: linear-gradient(135deg, #E5C17B 0%, #FFF3DB 50%, #E5C17B 100%);
+  color: #2B0703 !important;
+  border-color: #D4AF37;
 }
 
 .btn-secondary {
-  border: 1px solid var(--color-dark);
-  color: var(--color-dark);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-dark);
-  color: var(--color-bg);
+  background: var(--color-primary);
+  color: #2B0703 !important;
+  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
 }
 
 .btn-outline-gold {
   border: 1px solid var(--color-primary);
   color: var(--color-dark);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .btn-outline-gold:hover {
-  background-color: var(--color-primary);
-  color: var(--color-white);
+  background: var(--color-primary);
+  color: #2B0703 !important;
+  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
 }
 
 /* Announcement Bar */
@@ -305,6 +351,16 @@ header {
   will-change: transform;
 }
 
+.logo-text {
+  background: linear-gradient(90deg, #C5A059 0%, #FFF3DB 25%, #C5A059 50%, #FFF3DB 75%, #C5A059 100%);
+  background-size: 200% auto;
+  color: transparent !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gold-shimmer-anim 6s linear infinite;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
 header.hide-nav {
   transform: translateY(-100%);
 }
@@ -348,15 +404,23 @@ header.scrolled {
 }
 
 .nav-link {
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
   color: var(--color-secondary);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   padding: 0.5rem 0;
+  text-transform: uppercase;
+  transition: var(--transition-smooth);
 }
 
 .nav-link:hover {
   color: var(--color-primary);
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
 }
 
 /* Mega Menu */
@@ -1327,19 +1391,20 @@ body.hovering-link .luxury-cursor-outline {
 
 .process-timeline-content {
   width: 44%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(252, 250, 245, 0.85);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(56, 9, 1, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--border-radius-md);
   padding: 2rem;
   box-shadow: var(--shadow-premium);
   position: relative;
-  transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 .process-timeline-item:hover .process-timeline-content {
   transform: translateY(-5px);
-  border-color: rgba(231, 180, 83, 0.4);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hover);
 }
 
 .process-timeline-content h3 {
@@ -1580,20 +1645,20 @@ body.hovering-link .luxury-cursor-outline {
 }
 
 .faq-card {
-  border: 1px solid rgba(56, 9, 1, 0.06) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
   border-radius: var(--border-radius-md) !important;
   padding: 0 !important;
-  background: rgba(255, 255, 255, 0.7) !important;
+  background: rgba(252, 250, 245, 0.85) !important;
   backdrop-filter: blur(8px);
   box-shadow: var(--shadow-premium);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   overflow: hidden;
 }
 
 .faq-card:hover {
-  border-color: rgba(231, 180, 83, 0.3) !important;
+  border-color: var(--color-primary) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(56, 9, 1, 0.06);
+  box-shadow: var(--shadow-hover);
 }
 
 .faq-summary {
@@ -1685,12 +1750,13 @@ body.hovering-link .luxury-cursor-outline {
 }
 
 .contact-card {
-  background: var(--color-white);
-  border: 1px solid rgba(56, 9, 1, 0.05);
+  background: rgba(252, 250, 245, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--border-radius-md);
   padding: 1.5rem 2rem;
   box-shadow: var(--shadow-premium);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   display: flex;
   align-items: flex-start;
   gap: 1.5rem;
@@ -1698,8 +1764,8 @@ body.hovering-link .luxury-cursor-outline {
 
 .contact-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(231, 180, 83, 0.3);
-  box-shadow: 0 10px 30px rgba(56, 9, 1, 0.05);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hover);
 }
 
 .contact-card-icon {
@@ -1899,19 +1965,19 @@ body.hovering-link .luxury-cursor-outline {
 .blog-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(56, 9, 1, 0.05) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
   border-radius: var(--border-radius-md) !important;
   overflow: hidden !important;
-  background: rgba(255, 255, 255, 0.7) !important;
+  background: rgba(252, 250, 245, 0.85) !important;
   backdrop-filter: blur(8px);
   box-shadow: var(--shadow-premium);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 .blog-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(231, 180, 83, 0.3) !important;
-  box-shadow: 0 12px 35px rgba(56, 9, 1, 0.08);
+  border-color: var(--color-primary) !important;
+  box-shadow: var(--shadow-hover);
 }
 
 .blog-card-media {
@@ -2106,14 +2172,15 @@ body.hovering-link .luxury-cursor-outline {
 
 .story-timeline-card {
   width: 44%;
-  background: var(--color-white);
-  border: 1px solid rgba(56, 9, 1, 0.05);
+  background: rgba(252, 250, 245, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--border-radius-md);
   padding: 2rem;
   box-shadow: var(--shadow-premium);
   position: relative;
   z-index: 2;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 .story-timeline-card:hover {
@@ -2307,4 +2374,164 @@ body.hovering-link .luxury-cursor-outline {
 .blog-modal-text li {
   margin-bottom: 0.5rem;
   list-style-type: square;
+}
+
+/* ==========================================================================
+   ROYAL IMPERIAL EMBELLISHMENTS & THEME HELPERS
+   ========================================================================== */
+
+/* Gold Shimmer/Shining Text Effect */
+.gold-shimmer-text {
+  background: linear-gradient(90deg, #C5A059 0%, #FFF3DB 25%, #C5A059 50%, #FFF3DB 75%, #C5A059 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gold-shimmer-anim 6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes gold-shimmer-anim {
+  to { background-position: 200% center; }
+}
+
+/* Royal Header Frame Ornament */
+.royal-header-frame {
+  position: relative;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: 1.5rem;
+}
+
+.royal-header-frame::after {
+  content: "❖ ⚜ ❖";
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  letter-spacing: 0.2em;
+  display: block;
+  margin-top: 0.75rem;
+  position: relative;
+}
+
+.royal-header-frame::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary) 50%, transparent);
+}
+
+/* Royal Double Gold Border Offset Frame */
+.royal-double-border {
+  position: relative;
+  border: 1px solid var(--color-primary);
+  padding: 8px;
+  background: transparent;
+}
+
+.royal-double-border::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid var(--color-primary);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Custom CSS Royal Seal Medallion */
+.royal-seal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.royal-seal {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FCFAF5 20%, #FFF3DB 60%, #E5C17B 100%);
+  border: 3px double var(--color-primary);
+  box-shadow: 0 10px 30px rgba(43, 7, 3, 0.12), inset 0 0 20px rgba(43, 7, 3, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  animation: seal-rotate-subtle 20s linear infinite;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.royal-seal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(197, 160, 89, 0.3);
+}
+
+.royal-seal-ribbon-left, .royal-seal-ribbon-right {
+  position: absolute;
+  bottom: -20px;
+  width: 30px;
+  height: 50px;
+  background-color: var(--color-dark);
+  border: 1px solid var(--color-primary);
+  z-index: -1;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 80%, 0% 100%);
+}
+
+.royal-seal-ribbon-left {
+  left: 35px;
+  transform: rotate(15deg);
+}
+
+.royal-seal-ribbon-right {
+  right: 35px;
+  transform: rotate(-15deg);
+}
+
+.royal-seal-text-circle {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  color: var(--color-dark);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.royal-seal-center-crest {
+  font-size: 1.8rem;
+  color: var(--color-dark);
+  margin: 3px 0;
+  line-height: 1;
+}
+
+@keyframes seal-rotate-subtle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Glassmorphism Cards with Royal Tint */
+.royal-glass-card {
+  background: rgba(252, 250, 245, 0.75);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: var(--shadow-premium);
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-smooth);
+}
+
+.royal-glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
 }

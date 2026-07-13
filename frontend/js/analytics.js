@@ -60,12 +60,12 @@ function injectStructuredData() {
     const productSchema = {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "Adwait Premium A2 Bilona Desi Ghee",
+      "name": "Adwait Premium Bilona Desi Ghee",
       "image": [
         "https://adwaitghee.com/images/ghee_jar.jpg"
       ],
-      "description": "Pure traditionally churned Desi Ghee made from A2 Gir Cow milk using Vedic Bilona curd method.",
-      "sku": "ADW-A2-GHEE",
+      "description": "Pure traditionally churned Desi Ghee made from grass-fed Desi Cow milk using Vedic Bilona curd method.",
+      "sku": "ADW-BILONA-GHEE",
       "mpn": "ADW-01",
       "brand": {
         "@type": "Brand",
@@ -107,10 +107,10 @@ function injectStructuredData() {
       "@type": "FAQPage",
       "mainEntity": [{
         "@type": "Question",
-        "name": "What is A2 Bilona Desi Ghee?",
+        "name": "What is Bilona Desi Ghee?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A2 Bilona Desi Ghee is traditionally churned butter fat obtained from the curd of A2 Gir cow milk using a wooden churner (Bilona) in two directions. It contains no A1 beta-casein proteins and is rich in nutrients."
+          "text": "Bilona Desi Ghee is traditionally churned butter fat obtained from the curd of grass-fed Desi cow milk using a wooden churner (Bilona) in two directions. It is rich in nutrients."
         }
       }, {
         "@type": "Question",
@@ -164,7 +164,7 @@ function getBreadcrumbs() {
     list.push({ name: 'Shop', url: `${domain}/shop.html` });
   } else if (path.includes('product.html')) {
     list.push({ name: 'Shop', url: `${domain}/shop.html` });
-    list.push({ name: 'A2 Bilona Desi Ghee', url: `${domain}/product.html` });
+    list.push({ name: 'Bilona Desi Ghee', url: `${domain}/product.html` });
   } else if (path.includes('process.html')) {
     list.push({ name: 'Our Process', url: `${domain}/process.html` });
   } else if (path.includes('about.html')) {

@@ -55,7 +55,7 @@ async function triggerRazorpayPayment(customerDetails) {
       amount: orderData.amount * 100, 
       currency: 'INR',
       name: 'Adwait Desi Ghee',
-      description: `Traditional A2 Bilona Ghee Order`,
+      description: `Traditional Bilona Desi Ghee Order`,
       image: 'https://cdn.shopify.com/s/files/1/0550/2953/0798/files/adwait_logo_gold.png?v=demo',
       order_id: orderData.order_id, // Pass server-created Razorpay Order ID!
       handler: function (response) {

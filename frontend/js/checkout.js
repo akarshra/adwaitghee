@@ -122,8 +122,8 @@ function initCheckoutPage() {
       </div>
       <div>
         <div style="font-size: 1.4rem; margin-bottom: 0.25rem;">🌱</div>
-        <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); margin: 0 0 0.1rem 0;">Pure A2</p>
-        <p style="font-size: 0.55rem; color: #777; margin: 0; line-height: 1.2;">Gir Cow Curd</p>
+        <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); margin: 0 0 0.1rem 0;">Pure Curd</p>
+        <p style="font-size: 0.55rem; color: #777; margin: 0; line-height: 1.2;">Desi Cow Milk</p>
       </div>
       <div>
         <div style="font-size: 1.4rem; margin-bottom: 0.25rem;">🍯</div>

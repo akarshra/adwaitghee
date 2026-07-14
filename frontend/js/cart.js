@@ -38,10 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Render cart page if we are on cart.html
-  if (window.location.pathname.includes('cart.html')) {
-    renderCartPage();
-  }
+
 });
 
 /* 1. Cart Management */
@@ -70,9 +67,7 @@ function removeFromCart(id, weight) {
   updateCartCounters();
   renderCartDrawerItems();
   
-  if (window.location.pathname.includes('cart.html')) {
-    renderCartPage();
-  }
+
 }
 
 function updateQuantity(id, weight, delta) {
@@ -85,9 +80,7 @@ function updateQuantity(id, weight, delta) {
       saveCart();
       updateCartCounters();
       renderCartDrawerItems();
-      if (window.location.pathname.includes('cart.html')) {
-        renderCartPage();
-      }
+
     }
   }
 }
@@ -161,7 +154,6 @@ function initCartDrawer() {
           <span class="drawer-subtotal">₹0.00</span>
         </div>
         <p style="font-size: 0.8rem; color: #777; margin-bottom: 1rem;">Taxes and shipping calculated at checkout.</p>
-        <a href="cart.html" class="btn btn-outline-gold" style="width: 100%; margin-bottom: 0.5rem; text-align: center;">View Cart</a>
         <a href="checkout.html" class="btn btn-primary" style="width: 100%; text-align: center;">Proceed to Checkout</a>
       </div>
     `;
@@ -292,153 +284,6 @@ function trackRecentlyViewed(id, name, price, img) {
   localStorage.setItem('adwait_recently_viewed', JSON.stringify(recentlyViewed));
 }
 
-/* 5. Cart Page Render (cart.html specific) */
-function renderCartPage() {
-  const cartGrid = document.querySelector('#cart-page-grid');
-  if (!cartGrid) return;
-
-  if (cart.length === 0) {
-    cartGrid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-xl) 0;">
-        <h2 style="font-family: var(--font-serif); margin-bottom: 1rem;">Your Ayurvedic Ritual Bag is Empty</h2>
-        <p style="margin-bottom: 2rem; color: #777;">Return to the store to invite the golden elixir of health into your kitchen.</p>
-        <a href="shop.html" class="btn btn-primary">Return to Shop</a>
-      </div>
-    `;
-    return;
-  }
-
-  const calcs = getCartCalculations();
-
-  let htmlContent = `
-    <!-- Cart Items list -->
-    <div class="cart-items-column" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
-      <h2 style="font-family: var(--font-serif); border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 1rem;">Items In Your Bag</h2>
-  `;
-
-  htmlContent += cart.map(item => `
-    <div class="cart-page-item">
-      <img src="${item.img}" alt="${item.name}" class="cart-page-item-img">
-      
-      <div class="cart-page-item-info">
-        <h3 class="cart-page-item-title">${item.name}</h3>
-        <p class="cart-page-item-weight">Packaging: ${item.weight}</p>
-        
-        <div class="cart-page-item-actions">
-          <div class="cart-drawer-qty">
-            <button class="qty-btn" onclick="updateQuantity('${item.id}', '${item.weight}', -1)">-</button>
-            <span style="font-weight: 500;">${item.quantity}</span>
-            <button class="qty-btn" onclick="updateQuantity('${item.id}', '${item.weight}', 1)">+</button>
-          </div>
-          <button onclick="removeFromCart('${item.id}', '${item.weight}')" class="cart-page-item-remove">Remove</button>
-        </div>
-      </div>
-      
-      <div class="cart-page-item-price-block">
-        <span class="cart-page-item-price">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
-      </div>
-    </div>
-  `).join('');
-
-  htmlContent += `
-    </div>
-    <!-- Cart Summary column -->
-    <div class="cart-summary-column" style="background: white; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-lg); height: fit-content; box-shadow: var(--shadow-premium);">
-      <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; color: var(--color-dark);">Order Summary</h3>
-      
-      <!-- Free Shipping visual tracker -->
-      <div style="background: #f4faf6; border: 1px solid #d4ecd9; border-radius: var(--border-radius-md); padding: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-        <span style="font-size: 1.5rem;">🚚</span>
-        <div>
-          <p style="margin: 0; font-size: 0.85rem; color: #27803B; font-weight: 600;">You qualify for FREE Delivery!</p>
-          <p style="margin: 0; font-size: 0.75rem; color: #666;">Complimentary Express Shipping across India.</p>
-        </div>
-      </div>
-
-      <!-- Promo coupon field -->
-      <div style="margin-bottom: 1.5rem;">
-        <label class="form-label" style="font-size: 0.85rem; color: var(--color-dark); font-weight: 600; display: block; margin-bottom: 0.4rem;">Apply Gift Coupon</label>
-        <div style="display: flex; gap: 0.5rem;">
-          <input type="text" id="coupon-code-input" class="form-control" placeholder="e.g. PURE20" value="${calcs.couponCode}" style="border-radius: var(--border-radius-full); padding: 0.6rem 1rem; border: 1px solid rgba(56, 9, 1, 0.15); width: 100%; outline: none; font-size: 0.9rem;">
-          <button onclick="applyCouponCode()" class="btn btn-outline-gold" style="padding: 0.6rem 1.2rem; border-radius: var(--border-radius-full); font-size: 0.9rem; cursor: pointer;">Apply</button>
-        </div>
-        ${calcs.couponCode ? `<p style="font-size: 0.8rem; color: #27803B; margin-top: 0.4rem; font-weight: 500;">✓ Coupon "${calcs.couponCode}" applied successfully!</p>` : ''}
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
-        <div style="display: flex; justify-content: space-between;">
-          <span style="color: #666;">Subtotal</span>
-          <span style="font-weight: 500; color: var(--color-dark);">₹${calcs.subtotal.toLocaleString('en-IN')}</span>
-        </div>
-        ${calcs.discountAmount > 0 ? `
-        <div style="display: flex; justify-content: space-between; color: #27803B; font-weight: 500;">
-          <span>Discount Applied</span>
-          <span>- ₹${calcs.discountAmount.toLocaleString('en-IN')}</span>
-        </div>` : ''}
-        <div style="display: flex; justify-content: space-between;">
-          <span style="color: #666;">GST (5% tax)</span>
-          <span style="font-weight: 500; color: var(--color-dark);">₹${calcs.gstAmount.toLocaleString('en-IN')}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span style="color: #666;">Shipping (Pan-India)</span>
-          <span>${calcs.shippingCost === 0 ? '<span style="color: #27803B; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em;">FREE</span>' : `₹${calcs.shippingCost}`}</span>
-        </div>
-      </div>
-      
-      <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--color-dark);">
-        <span>Total</span>
-        <span>₹${Math.round(calcs.finalTotal).toLocaleString('en-IN')}</span>
-      </div>
-
-      <a href="checkout.html" class="btn btn-primary" style="width: 100%; text-align: center; font-size: 1.05rem; display: block; padding: 0.8rem 1rem;">Proceed to Checkout</a>
-      
-      <!-- Premium CSS Trust Seals Grid -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; margin-top: 1.5rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
-        <div>
-          <div style="font-size: 1.4rem; margin-bottom: 0.25rem;">🔒</div>
-          <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); margin: 0 0 0.1rem 0;">100% Secure</p>
-          <p style="font-size: 0.55rem; color: #777; margin: 0; line-height: 1.2;">Razorpay Secure</p>
-        </div>
-        <div>
-          <div style="font-size: 1.4rem; margin-bottom: 0.25rem;">🌱</div>
-          <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); margin: 0 0 0.1rem 0;">Pure Curd</p>
-          <p style="font-size: 0.55rem; color: #777; margin: 0; line-height: 1.2;">Desi Cow Milk</p>
-        </div>
-        <div>
-          <div style="font-size: 1.4rem; margin-bottom: 0.25rem;">🍯</div>
-          <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); margin: 0 0 0.1rem 0;">Traditional</p>
-          <p style="font-size: 0.55rem; color: #777; margin: 0; line-height: 1.2;">Vedic Bilona</p>
-        </div>
-      </div>
-    </div>
-  `;
-
-  cartGrid.innerHTML = htmlContent;
-}
-
-function applyCouponCode() {
-  const input = document.querySelector('#coupon-code-input');
-  if (input) {
-    const code = input.value.trim().toUpperCase();
-    if (code === '') {
-      sessionStorage.removeItem('applied_coupon');
-      renderCartPage();
-      return;
-    }
-    
-    if (COUPONS[code] !== undefined) {
-      sessionStorage.setItem('applied_coupon', code);
-      renderCartPage();
-      if (window.showSuccessPopup) {
-        window.showSuccessPopup(`Coupon "${code}" applied!`);
-      }
-    } else {
-      alert('Invalid Promo Code. Try "PURE20" for 20% discount.');
-    }
-  }
-}
-
 // Global functions for inline html button triggers
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
-window.applyCouponCode = applyCouponCode;

@@ -48,8 +48,13 @@ foreach ($items as $item) {
 $discount = 0;
 $couponCode = filter_var($inputData['couponCode'] ?? '', FILTER_DEFAULT);
 if ($couponCode) {
-    $COUPONS = [ 'PURE20' => 0.20, 'BILONA10' => 0.10, 'AKARSH10' => 0.10 ];
-    $discountRate = $COUPONS[strtoupper($couponCode)] ?? 0;
+    $discountRate = 0;
+    $couponStmt = $pdo->prepare("SELECT discount_percent FROM coupons WHERE code = :code AND active = 1 LIMIT 1");
+    $couponStmt->execute([':code' => strtoupper($couponCode)]);
+    $couponData = $couponStmt->fetch();
+    if ($couponData) {
+        $discountRate = intval($couponData['discount_percent']) / 100;
+    }
     $discount = $calculated_subtotal * $discountRate;
 }
 
@@ -57,6 +62,28 @@ $taxable = $calculated_subtotal - $discount;
 $gst = $taxable * 0.05;
 $shipping = 0; // Free shipping
 $calculated_total = round($taxable + $gst + $shipping);
+
+// Validate inventory stock availability before order creation
+foreach ($items as $item) {
+    $pid = $item['id'] ?? 'adw-500ml';
+    $qty = intval($item['quantity']);
+    
+    $stockStmt = $pdo->prepare("SELECT stock, product_name FROM inventory WHERE product_id = :pid");
+    $stockStmt->execute([':pid' => $pid]);
+    $inv = $stockStmt->fetch();
+    
+    if (!$inv) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => "Product code $pid not found in inventory."]);
+        exit();
+    }
+    
+    if ($inv['stock'] < $qty) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => "Insufficient stock for " . $inv['product_name'] . ". Available: " . $inv['stock'] . ", requested: $qty."]);
+        exit();
+    }
+}
 
 $order_ref = 'ADW-' . rand(100000, 999999);
 $razorpay_order_id = '';

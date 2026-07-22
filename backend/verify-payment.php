@@ -64,6 +64,9 @@ try {
         exit();
     }
 
+    // Start database transaction
+    $pdo->beginTransaction();
+
     // Update payment status to Paid
     $updateStmt = $pdo->prepare("
         UPDATE orders 
@@ -79,6 +82,30 @@ try {
     $itemStmt = $pdo->prepare("SELECT product_id AS id, product_name AS name, price, weight, quantity, image AS img FROM order_items WHERE order_id = :order_id");
     $itemStmt->execute([':order_id' => $order['id']]);
     $items = $itemStmt->fetchAll();
+
+    // Check and deduct stock from inventory
+    foreach ($items as $item) {
+        $pid = $item['id'];
+        $qty = intval($item['quantity']);
+        
+        $stockStmt = $pdo->prepare("SELECT stock, product_name FROM inventory WHERE product_id = :pid FOR UPDATE");
+        $stockStmt->execute([':pid' => $pid]);
+        $inv = $stockStmt->fetch();
+        
+        if (!$inv) {
+            throw new Exception("Product code $pid not found in inventory.");
+        }
+        
+        if ($inv['stock'] < $qty) {
+            throw new Exception("Insufficient stock for " . $inv['product_name'] . ". Available: " . $inv['stock'] . ", requested: $qty.");
+        }
+        
+        // Deduct stock
+        $deductStmt = $pdo->prepare("UPDATE inventory SET stock = stock - :qty WHERE product_id = :pid");
+        $deductStmt->execute([':qty' => $qty, ':pid' => $pid]);
+    }
+
+    $pdo->commit();
 
     // Send successful confirmation response
     echo json_encode([
@@ -101,8 +128,11 @@ try {
     ]);
 
 } catch (Exception $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     error_log("Razorpay Success Db Commit Failure: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Failed to finalize purchase in database.']);
+    echo json_encode(['success' => false, 'message' => 'Failed to finalize purchase in database. Error: ' . $e->getMessage()]);
 }
 ?>

@@ -2,7 +2,7 @@
 
 // Constants
 const GST_PERCENTAGE = 0.05; // 5% GST on Ghee in India
-const COUPONS = {
+let COUPONS = {
   'PURE20': 0.20,  // 20% off
   'BILONA10': 0.10, // 10% off
   'AKARSH10': 0.10  // 10% off
@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCounters();
   initCartDrawer();
   
+  // Load dynamic coupons from database
+  fetch('backend/get-coupons.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.success && data.coupons) {
+        COUPONS = data.coupons;
+      }
+    })
+    .catch(err => console.error("Could not load coupons:", err));
+  
   // Bind dynamic add-to-cart clicks
   document.body.addEventListener('click', (e) => {
     if (e.target.classList.contains('add-to-cart-trigger')) {
@@ -28,6 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = btn.getAttribute('data-image') || 'images/ghee_jar.jpg?v=3';
       
       addToCart({ id, name, price, weight, img, quantity: 1 });
+    }
+
+    if (e.target.classList.contains('buy-now-trigger')) {
+      const btn = e.target;
+      const id = btn.getAttribute('data-id');
+      const name = btn.getAttribute('data-name');
+      const price = parseFloat(btn.getAttribute('data-price'));
+      const weight = btn.getAttribute('data-weight') || '1kg';
+      const img = btn.getAttribute('data-image') || 'images/ghee_jar.jpg?v=3';
+      
+      buyNow({ id, name, price, weight, img, quantity: 1 });
     }
     
     if (e.target.classList.contains('wishlist-trigger')) {
@@ -60,6 +81,24 @@ function addToCart(item) {
     window.showSuccessPopup(`Added ${item.name} (${item.weight}) to cart.`);
   }
 }
+
+function buyNow(item) {
+  const existingItemIndex = cart.findIndex(c => c.id === item.id && c.weight === item.weight);
+  
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += item.quantity;
+  } else {
+    cart.push(item);
+  }
+  
+  saveCart();
+  updateCartCounters();
+  renderCartDrawerItems();
+  
+  window.location.href = 'checkout.html';
+}
+
+window.buyNow = buyNow;
 
 function removeFromCart(id, weight) {
   cart = cart.filter(c => !(c.id === id && c.weight === weight));

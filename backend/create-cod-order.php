@@ -53,8 +53,13 @@ foreach ($items as $item) {
 $discount = 0;
 $couponCode = filter_var($inputData['couponCode'] ?? '', FILTER_DEFAULT);
 if ($couponCode) {
-    $COUPONS = [ 'PURE20' => 0.20, 'BILONA10' => 0.10, 'AKARSH10' => 0.10 ];
-    $discountRate = $COUPONS[strtoupper($couponCode)] ?? 0;
+    $discountRate = 0;
+    $couponStmt = $pdo->prepare("SELECT discount_percent FROM coupons WHERE code = :code AND active = 1 LIMIT 1");
+    $couponStmt->execute([':code' => strtoupper($couponCode)]);
+    $couponData = $couponStmt->fetch();
+    if ($couponData) {
+        $discountRate = intval($couponData['discount_percent']) / 100;
+    }
     $discount = $calculated_subtotal * $discountRate;
 }
 
@@ -66,6 +71,28 @@ $calculated_total = $taxable + $gst + $shipping;
 // Begin transaction
 try {
     $pdo->beginTransaction();
+
+    // Check and deduct inventory stock
+    foreach ($items as $item) {
+        $pid = $item['id'] ?? 'adw-500ml';
+        $qty = intval($item['quantity']);
+        
+        $stockStmt = $pdo->prepare("SELECT stock, product_name FROM inventory WHERE product_id = :pid FOR UPDATE");
+        $stockStmt->execute([':pid' => $pid]);
+        $inv = $stockStmt->fetch();
+        
+        if (!$inv) {
+            throw new Exception("Product code $pid not found in inventory.");
+        }
+        
+        if ($inv['stock'] < $qty) {
+            throw new Exception("Insufficient stock for " . $inv['product_name'] . ". Available: " . $inv['stock'] . ", requested: $qty.");
+        }
+        
+        // Deduct stock
+        $deductStmt = $pdo->prepare("UPDATE inventory SET stock = stock - :qty WHERE product_id = :pid");
+        $deductStmt->execute([':qty' => $qty, ':pid' => $pid]);
+    }
 
     // Insert Order
     $stmt = $pdo->prepare("

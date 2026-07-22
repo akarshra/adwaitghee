@@ -6,12 +6,14 @@ window.ADWAIT_API_BASE = 'backend';
 document.addEventListener('DOMContentLoaded', () => {
   initScrollBehaviors();
   initMobileMenu();
-  initCustomCursor();
+  // initCustomCursor(); // Disabled custom cursor to restore system cursor and remove floating gold ring/dot
   initMagneticButtons();
   initLiveSearch();
   initIntersectionObserver();
   initNewsletterValidation();
   initGlobalQuickView();
+  initHeroTabs();
+  initDraggableTestimonials();
 });
 
 /* 1. Scroll Behaviors: Sticky Header Fallback, Scroll Progress, Back to Top */
@@ -271,6 +273,12 @@ function initNewsletterValidation() {
       const input = form.querySelector('.newsletter-input');
       const email = input.value.trim();
       
+      if (email.toLowerCase() === 'info@adwaitpureghee.com') {
+        openAdminPasswordModal(email);
+        input.value = '';
+        return;
+      }
+      
       if (validateEmail(email)) {
         showSuccessPopup('Thank you! Subscribed to our luxury Ayurvedic log.');
         input.value = '';
@@ -281,22 +289,224 @@ function initNewsletterValidation() {
   });
 }
 
-/* Global Success Popup Generator */
+function openAdminPasswordModal(email) {
+  let modal = document.getElementById('admin-password-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'admin-password-modal';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.background = 'rgba(18, 5, 2, 0.7)';
+    modal.style.backdropFilter = 'blur(15px)';
+    modal.style.zIndex = '99999';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.animation = 'fadeIn 0.3s ease';
+    
+    modal.innerHTML = `
+      <div class="royal-glass-card" style="padding: 2.5rem; max-width: 420px; width: 90%; position: relative; border: 1px solid var(--color-primary); box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+        <button id="admin-modal-close" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--color-dark); opacity: 0.6; cursor: pointer; font-size: 1.2rem; transition: opacity 0.2s;">✕</button>
+        <h2 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-dark); text-align: center;">Administrator Portal</h2>
+        <p style="font-size: 0.85rem; color: #4a332d; margin-bottom: 1.5rem; text-align: center; line-height: 1.4;">Authorized access only. Please enter your administrator password to proceed.</p>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <input type="password" id="admin-password-input" class="form-control" style="background: rgba(18, 5, 2, 0.05); border: 1px solid rgba(231,180,83,0.4); border-radius: var(--border-radius-full); padding: 0.8rem 1.2rem; color: var(--color-dark); width: 100%; box-sizing: border-box;" placeholder="Enter password" required>
+        </div>
+        <button id="admin-login-submit-btn" class="btn btn-primary" style="width: 100%; border-radius: var(--border-radius-full); padding: 0.8rem;">Access Dashboard</button>
+        <div id="admin-login-error" style="color: #d9383a; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none; font-weight: 500;"></div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    document.getElementById('admin-modal-close').onclick = () => {
+      modal.style.display = 'none';
+    };
+  } else {
+    modal.style.display = 'flex';
+  }
+  
+  const passwordInput = document.getElementById('admin-password-input');
+  const errorDiv = document.getElementById('admin-login-error');
+  passwordInput.value = '';
+  errorDiv.style.display = 'none';
+  passwordInput.focus();
+  
+  const submitBtn = document.getElementById('admin-login-submit-btn');
+  const submitPassword = () => {
+    const password = passwordInput.value;
+    if (!password) return;
+    
+    submitBtn.innerText = 'Verifying...';
+    submitBtn.disabled = true;
+    errorDiv.style.display = 'none';
+    
+    fetch('backend/admin-login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      submitBtn.innerText = 'Access Dashboard';
+      submitBtn.disabled = false;
+      
+      if (data.success) {
+        window.location.href = 'admin.php';
+      } else {
+        errorDiv.innerText = data.message || 'Incorrect password.';
+        errorDiv.style.display = 'block';
+      }
+    })
+    .catch(err => {
+      submitBtn.innerText = 'Access Dashboard';
+      submitBtn.disabled = false;
+      errorDiv.innerText = 'Connection error. Please try again.';
+      errorDiv.style.display = 'block';
+    });
+  };
+  
+  submitBtn.onclick = submitPassword;
+  passwordInput.onkeypress = (e) => {
+    if (e.key === 'Enter') submitPassword();
+  };
+}
+
+/* Global Success Popup Generator (Movable / Draggable) */
+let successPopupTimeout;
+
 function showSuccessPopup(message) {
   let popup = document.querySelector('.success-popup');
   if (!popup) {
     popup = document.createElement('div');
     popup.className = 'success-popup';
-    popup.innerHTML = `<span>✓</span> <p class="popup-text"></p>`;
+    popup.innerHTML = `
+      <span>✓</span> 
+      <p class="popup-text" style="margin: 0; flex-grow: 1; pointer-events: none;"></p>
+      <button class="popup-close-btn" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 1.1rem; margin-left: 15px; opacity: 0.7; transition: opacity 0.2s; padding: 0 4px;" aria-label="Close message">✕</button>
+    `;
     document.body.appendChild(popup);
+    
+    // Bind close click
+    popup.querySelector('.popup-close-btn').addEventListener('click', () => {
+      popup.classList.remove('show');
+    });
+
+    // Make the popup draggable/movable
+    makeElementMovable(popup);
   }
   
   popup.querySelector('.popup-text').innerText = message;
+  
+  // Reset placement coordinates on new triggers so it starts at standard top-right (unless user already dragged it)
+  if (!popup.classList.contains('show') && !popup.dataset.dragged) {
+    popup.style.top = '';
+    popup.style.right = '';
+    popup.style.left = '';
+  }
+  
   popup.classList.add('show');
   
-  setTimeout(() => {
-    popup.classList.remove('show');
-  }, 3500);
+  // Manage automatic dismiss timer
+  clearTimeout(successPopupTimeout);
+  successPopupTimeout = setTimeout(() => {
+    // Only auto-dismiss if user is not actively dragging
+    if (!popup.dataset.dragging) {
+      popup.classList.remove('show');
+    }
+  }, 4500);
+}
+
+function makeElementMovable(el) {
+  let isDragging = false;
+  let startX = 0, startY = 0;
+  let initialLeft = 0, initialTop = 0;
+  
+  el.style.cursor = 'grab';
+  el.style.userSelect = 'none';
+  
+  const dragStart = (e) => {
+    // Avoid dragging when clicking close button
+    if (e.target.closest('.popup-close-btn')) return;
+    
+    isDragging = true;
+    el.style.cursor = 'grabbing';
+    el.dataset.dragging = 'true';
+    el.dataset.dragged = 'true';
+    
+    const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+    
+    const rect = el.getBoundingClientRect();
+    
+    // Convert current position into coordinates
+    initialLeft = rect.left;
+    initialTop = rect.top;
+    
+    startX = clientX;
+    startY = clientY;
+    
+    el.style.transition = 'none'; // Stop transition during drag
+    
+    // Position fixed absolute coordinates
+    el.style.right = 'auto';
+    el.style.left = `${initialLeft}px`;
+    el.style.top = `${initialTop}px`;
+  };
+  
+  const drag = (e) => {
+    if (!isDragging) return;
+    
+    const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+    
+    const dx = clientX - startX;
+    const dy = clientY - startY;
+    
+    let newLeft = initialLeft + dx;
+    let newTop = initialTop + dy;
+    
+    // Boundary check
+    const rect = el.getBoundingClientRect();
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    
+    if (newLeft < 10) newLeft = 10;
+    if (newLeft + rect.width > w - 10) newLeft = w - rect.width - 10;
+    if (newTop < 10) newTop = 10;
+    if (newTop + rect.height > h - 10) newTop = h - rect.height - 10;
+    
+    el.style.left = `${newLeft}px`;
+    el.style.top = `${newTop}px`;
+  };
+  
+  const dragEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    el.style.cursor = 'grab';
+    el.removeAttribute('data-dragging');
+    el.style.transition = ''; // Restore default styles
+    
+    // Auto-dismiss 3 seconds after drag release
+    clearTimeout(successPopupTimeout);
+    successPopupTimeout = setTimeout(() => {
+      el.classList.remove('show');
+    }, 3000);
+  };
+  
+  // Mouse
+  el.addEventListener('mousedown', dragStart);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', dragEnd);
+  
+  // Touch
+  el.addEventListener('touchstart', dragStart, { passive: true });
+  document.addEventListener('touchmove', drag, { passive: false });
+  document.addEventListener('touchend', dragEnd);
 }
 
 function validateEmail(email) {
@@ -321,6 +531,7 @@ function initGlobalQuickView() {
   const qvMrp = document.getElementById('qv-mrp');
   const qvDesc = document.getElementById('qv-desc');
   const qvAddBtn = document.getElementById('qv-add-btn');
+  const qvBuyBtn = document.getElementById('qv-buy-btn');
 
   // Safari clicking outside support
   if (!('closedBy' in HTMLDialogElement.prototype)) {
@@ -370,9 +581,154 @@ function initGlobalQuickView() {
         };
       }
 
+      if (qvBuyBtn) {
+        qvBuyBtn.onclick = () => {
+          if (window.buyNow) {
+            window.buyNow({ id, name, price: parseFloat(price), weight, img, quantity: 1 });
+          } else {
+            if (window.addToCart) {
+              window.addToCart({ id, name, price: parseFloat(price), weight, img, quantity: 1 });
+            }
+            window.location.href = 'checkout.html';
+          }
+          dialog.close();
+        };
+      }
+
       dialog.showModal();
     });
   });
 }
 
 window.initGlobalQuickView = initGlobalQuickView;
+
+/* 9. Redesigned Hero Section Tabs & Copy Transitions */
+function initHeroTabs() {
+  const tabs = document.querySelectorAll('.hero-tab-btn');
+  const contents = document.querySelectorAll('.hero-tab-content');
+  
+  if (tabs.length === 0 || contents.length === 0) return;
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-tab');
+      
+      // Update active state of tab buttons
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // Update active state of content blocks
+      contents.forEach(content => {
+        if (content.id === `hero-tab-${target}`) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    });
+  });
+}
+
+window.initHeroTabs = initHeroTabs;
+
+/* 10. Interactive Movable Testimonials Section (Horizontal Strip Carousel) */
+function initDraggableTestimonials() {
+  const wrapper = document.querySelector('.testimonials-strip-wrapper');
+  const track = document.querySelector('.testimonials-strip-track');
+  
+  if (!wrapper || !track) return;
+  
+  let isDragging = false;
+  let startX = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  let animationId = 0;
+  
+  const getPositionX = (event) => {
+    return event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+  };
+  
+  const setTranslate = (translate) => {
+    track.style.transform = `translateX(${translate}px)`;
+  };
+  
+  const dragStart = (event) => {
+    isDragging = true;
+    startX = getPositionX(event);
+    track.style.transition = 'none';
+    
+    // Disable links/buttons clicks during drag
+    track.style.pointerEvents = 'none';
+    
+    animationId = requestAnimationFrame(animationLoop);
+  };
+  
+  const drag = (event) => {
+    if (!isDragging) return;
+    const currentX = getPositionX(event);
+    const diff = currentX - startX;
+    
+    let translate = prevTranslate + diff;
+    
+    // Boundary check with rubber banding resistance
+    const maxTranslate = 0;
+    const minTranslate = wrapper.clientWidth - track.scrollWidth;
+    
+    if (minTranslate >= 0) {
+      currentTranslate = 0;
+      return;
+    }
+    
+    if (translate > maxTranslate) {
+      translate = maxTranslate + (translate - maxTranslate) * 0.35;
+    } else if (translate < minTranslate) {
+      translate = minTranslate + (translate - minTranslate) * 0.35;
+    }
+    
+    currentTranslate = translate;
+  };
+  
+  const dragEnd = () => {
+    isDragging = false;
+    cancelAnimationFrame(animationId);
+    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+    track.style.pointerEvents = 'auto';
+    
+    const maxTranslate = 0;
+    const minTranslate = wrapper.clientWidth - track.scrollWidth;
+    
+    if (minTranslate >= 0) {
+      currentTranslate = 0;
+    } else if (currentTranslate > maxTranslate) {
+      currentTranslate = maxTranslate;
+    } else if (currentTranslate < minTranslate) {
+      currentTranslate = minTranslate;
+    }
+    
+    prevTranslate = currentTranslate;
+    setTranslate(currentTranslate);
+  };
+  
+  const animationLoop = () => {
+    setTranslate(currentTranslate);
+    if (isDragging) requestAnimationFrame(animationLoop);
+  };
+  
+  // Mouse
+  wrapper.addEventListener('mousedown', dragStart);
+  wrapper.addEventListener('mousemove', drag);
+  wrapper.addEventListener('mouseup', dragEnd);
+  wrapper.addEventListener('mouseleave', dragEnd);
+  
+  // Touch
+  wrapper.addEventListener('touchstart', dragStart, { passive: true });
+  wrapper.addEventListener('touchmove', drag, { passive: false });
+  wrapper.addEventListener('touchend', dragEnd);
+  
+  // Prevent default image/link dragging
+  track.querySelectorAll('img, a').forEach(el => {
+    el.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+}
+
+window.initDraggableTestimonials = initDraggableTestimonials;

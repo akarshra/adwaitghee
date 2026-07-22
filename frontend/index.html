@@ -14,11 +14,78 @@
   <meta name="twitter:card" content="summary_large_image">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css?v=44">
-  <link rel="stylesheet" href="css/animations.css?v=44">
-  <link rel="stylesheet" href="css/responsive.css?v=44">
+  <link rel="stylesheet" href="css/style.css?v=52">
+  <link rel="stylesheet" href="css/animations.css?v=50">
+  <link rel="stylesheet" href="css/responsive.css?v=50">
   <link rel="canonical" href="https://adwaitghee.com/index.html">
   <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- JSON-LD Structured Data Schemas -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Adwait Pure Desi Ghee",
+    "url": "https://adwaitghee.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://adwaitghee.com/index.html#shop?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Adwait Pure Desi Ghee",
+    "url": "https://adwaitghee.com/",
+    "logo": "https://adwaitghee.com/images/logo.png",
+    "sameAs": [
+      "https://www.facebook.com/adwaitghee",
+      "https://www.instagram.com/adwaitghee"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Adwait Pure Desi Ghee",
+    "image": "https://adwaitghee.com/images/hero_ghee_jar.png",
+    "@id": "https://adwaitghee.com/#localbusiness",
+    "url": "https://adwaitghee.com/",
+    "telephone": "+919876543210",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Adwait Organic Farms, Sector 4",
+      "addressLocality": "Mumbai",
+      "addressRegion": "Maharashtra",
+      "postalCode": "400001",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 19.0760,
+      "longitude": 72.8777
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "09:00",
+      "closes": "21:00"
+    }
+  }
+  </script>
 </head>
 <body>
   <!-- Tactile Paper Texture -->
@@ -71,29 +138,112 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero-section" style="position: relative; background: radial-gradient(circle at top right, #3F0E08 0%, #1A0301 100%); overflow: hidden; padding: var(--spacing-xl) 0; border-bottom: 2px solid var(--color-primary);">
-    <div class="container grid-2" style="align-items: center;">
-      <div class="hero-content reveal" style="z-index: 2;">
-        <span class="font-display text-gold" style="font-size: 0.9rem; letter-spacing: 0.2em; display: block; margin-bottom: 1rem;">ESTD. TRADITIONAL AYURVEDA</span>
-        <h1 style="font-size: 3.8rem; line-height: 1.15; margin-bottom: var(--spacing-sm); font-family: var(--font-serif); font-weight: 300; letter-spacing: -0.01em; color: var(--color-secondary);">
-          Pure Bilona <br><span class="italic-serif gold-shimmer-text">Desi Ghee</span> <br>Crafted Traditionally.
-        </h1>
-        <p style="font-size: 1.2rem; color: var(--color-secondary); opacity: 0.9; margin-bottom: 2rem; max-width: 500px; line-height: 1.5;">
-          Earthy, granular, and clarified fresh. Hand-churned using the traditional Bilona method from grass-fed Desi cow curd. 100% chemical-free and preservative-free.
-        </p>
-        <div style="display: flex; gap: var(--spacing-sm);">
-          <a href="index.html#shop" class="btn btn-primary magnetic-btn">Shop Elixir</a>
+  <section class="hero-section">
+    <!-- Ambient Background Video Loop -->
+    <video autoplay muted loop playsinline class="hero-bg-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; pointer-events: none; opacity: 0.22; filter: brightness(0.7) contrast(1.2);">
+      <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c05cba3d78f5d0b98eb6c757d59858cf&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Ambient drifting radial blobs -->
+    <div class="hero-glow-blob hero-glow-blob-1"></div>
+    <div class="hero-glow-blob hero-glow-blob-2"></div>
+
+    <div class="container hero-grid" style="position: relative; z-index: 2;">
+      <div class="hero-content reveal">
+        <!-- Luxury Brand Badge -->
+        <span class="font-display text-gold" style="font-size: 0.85rem; letter-spacing: 0.25em; display: block; margin-bottom: 1.5rem; text-transform: uppercase;">
+          ⚜ purveyor of traditional ayurveda ⚜
+        </span>
+
+        <!-- Glassmorphic Tabs Selector -->
+        <div class="hero-tabs">
+          <button class="hero-tab-btn active" data-tab="essence">The Essence</button>
+          <button class="hero-tab-btn" data-tab="origin">Vedic Origin</button>
+          <button class="hero-tab-btn" data-tab="wellness">The Wellness</button>
+        </div>
+
+        <!-- Dynamic Content Blocks -->
+        <div class="hero-tab-content-wrapper">
+          <!-- Essence Content -->
+          <div class="hero-tab-content active" id="hero-tab-essence">
+            <h1 class="hero-title">
+              Pure Bilona <br><span class="italic-serif gold-shimmer-text">Desi Ghee</span> <br>Crafted Traditionally.
+            </h1>
+            <p class="hero-desc">
+              Earthy, granular, and clarified fresh. Hand-churned using the traditional Bilona method from grass-fed Desi cow curd. 100% chemical-free and preservative-free.
+            </p>
+            <div class="hero-highlights">
+              <div class="hero-highlight-item"><span>🍯</span> Danedaar Granules</div>
+              <div class="hero-highlight-item"><span>🔥</span> Woodfire Clarified</div>
+              <div class="hero-highlight-item"><span>✨</span> Aromatic Elixir</div>
+            </div>
+          </div>
+
+          <!-- Origin Content -->
+          <div class="hero-tab-content" id="hero-tab-origin">
+            <h2 class="hero-title">
+              Vedic Clay-Pot <br><span class="italic-serif gold-shimmer-text">Bilona Churned</span> <br>From Fresh Curd.
+            </h2>
+            <p class="hero-desc">
+              Prepared using the sacred Vedic ritual: setting curd overnight in earthen clay pots and churning bi-directionally using wooden staffs. Never from raw cream.
+            </p>
+            <div class="hero-highlights">
+              <div class="hero-highlight-item"><span>🏺</span> Earthen Clay Pots</div>
+              <div class="hero-highlight-item"><span>🪵</span> Wooden Bilona Staff</div>
+              <div class="hero-highlight-item"><span>🐄</span> Grass-Fed Desi Cows</div>
+            </div>
+          </div>
+
+          <!-- Wellness Content -->
+          <div class="hero-tab-content" id="hero-tab-wellness">
+            <h2 class="hero-title">
+              The Golden Elixir <br><span class="italic-serif gold-shimmer-text">For Holistic Health</span> <br>Boosts Digestion.
+            </h2>
+            <p class="hero-desc">
+              A nutritional powerhouse rich in butyrate, vitamins A, D, E, K, and healthy fats. Promotes gut health, strengthens immunity, and boosts skin radiance.
+            </p>
+            <div class="hero-highlights">
+              <div class="hero-highlight-item"><span>⚡</span> Immunity Booster</div>
+              <div class="hero-highlight-item"><span>🌱</span> Digestion & Gut Health</div>
+              <div class="hero-highlight-item"><span>🪷</span> Lactose & Casein Free</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Actions -->
+        <div style="display: flex; gap: var(--spacing-sm); margin-top: 1rem;">
+          <a href="index.html#shop" class="btn btn-primary magnetic-btn hero-btn-glow">Shop Elixir</a>
           <a href="process.html" class="btn btn-secondary magnetic-btn" style="border: 1px solid var(--color-primary); color: var(--color-primary); background: transparent;">Our Vedic Process</a>
         </div>
       </div>
-      <div style="position: relative; display: flex; justify-content: center;" class="reveal-scale">
-        <!-- Floating circular golden aura backdrop -->
-        <div style="position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(231,180,83,0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;"></div>
-        <!-- Gold Fine Art Gallery Frame Offset -->
-        <div style="position: absolute; top: 15px; left: 15px; right: -15px; bottom: -15px; border: 1px solid var(--color-primary); border-radius: var(--border-radius-md); z-index: 0; pointer-events: none;"></div>
-        <img src="images/hero_ghee_jar.png?v=44" alt="Premium Adwait Bilona Desi Ghee Glass Jar with Gold Lid" style="z-index: 1; border-radius: var(--border-radius-md); box-shadow: var(--shadow-hover); max-height: 520px; object-fit: cover; position: relative;">
+
+      <!-- Hero Visual Showcase -->
+      <div class="hero-visual reveal-scale">
+        <div class="hero-image-wrapper">
+          <!-- Floating Glowing Aura -->
+          <div class="hero-glowing-aura"></div>
+          
+          <!-- Glowing Golden Liquid Drop -->
+          <div class="hero-gold-drop" title="100% Pure Ghee Drops"></div>
+          
+          <!-- Floating Glassmorphic Quality Badge -->
+          <div class="hero-glass-badge">
+            <span class="hero-badge-tag">⚜ CERTIFICATE</span>
+            <div class="hero-badge-text">100% Curd Churned A2 Ghee</div>
+          </div>
+
+          <!-- Central Image Showcase -->
+          <div class="hero-image-container">
+            <div class="hero-image-frame">
+              <img src="images/hero_ghee_jar.png?v=50" alt="Premium Adwait Bilona Desi Ghee Glass Jar with Gold Lid" class="hero-main-img">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+
   </section>
 
   <!-- Moveable Brand ticker strip -->
@@ -127,23 +277,18 @@
       <div class="royal-header-frame">
         <h2 class="font-display text-dark" style="font-size: 2rem; letter-spacing: 0.15em; display: inline-block; font-weight: 500;">The Pillars of Royal Purity</h2>
       </div>
-      <div class="grid-4">
+      <div class="grid-3">
         <div class="reveal reveal-delay-1" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid var(--color-primary); margin-bottom: var(--spacing-sm); color: var(--color-primary);">🐄</div>
-          <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">Desi Cows</h3>
-          <p style="font-size: 0.9rem; color: #666; max-width: 250px;">Ethically milked grass-fed Desi cows, grazing freely on chemical-free fields.</p>
-        </div>
-        <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
           <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid var(--color-primary); margin-bottom: var(--spacing-sm); color: var(--color-primary);">🍯</div>
           <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">Traditional Bilona</h3>
           <p style="font-size: 0.9rem; color: #666; max-width: 250px;">Churned from whole curd starter using bi-directional wooden whisks.</p>
         </div>
-        <div class="reveal reveal-delay-3" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
           <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid var(--color-primary); margin-bottom: var(--spacing-sm); color: var(--color-primary);">🌱</div>
           <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">Chemical Free</h3>
           <p style="font-size: 0.9rem; color: #666; max-width: 250px;">No artificial additives, heavy metals, synthetic colors, or starch fillers.</p>
         </div>
-        <div class="reveal reveal-delay-4" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div class="reveal reveal-delay-3" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
           <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid var(--color-primary); margin-bottom: var(--spacing-sm); color: var(--color-primary);">🪷</div>
           <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">No Preservatives</h3>
           <p style="font-size: 0.9rem; color: #666; max-width: 250px;">100% pure butter fat clarified to order. Shelf stable naturally.</p>
@@ -182,7 +327,8 @@
               <span class="ghee-card-price-mrp">₹1,399</span>
               <span style="font-size: 0.75rem; color:#27803B;">(10% OFF)</span>
             </div>
-            <p style="font-size:0.75rem; color:#777; margin-top:0.5rem;">Net Content: <strong>500ml</strong></p>
+            <p style="font-size:0.75rem; color:#777; margin-top:0.5rem; margin-bottom:1rem;">Net Content: <strong>500ml</strong></p>
+            <button class="btn btn-primary buy-now-trigger" data-id="adw-500ml" data-name="Adwait Pure Desi Ghee" data-price="1250" data-weight="500ml" data-image="images/ghee_jar.jpg?v=3" style="width: 100%; border-radius: var(--border-radius-full); font-size: 0.85rem; padding: 0.6rem 1rem;">Buy Now</button>
           </div>
         </div>
 
@@ -206,69 +352,15 @@
               <span class="ghee-card-price-mrp">₹2,799</span>
               <span style="font-size: 0.75rem; color:#27803B;">(11% OFF)</span>
             </div>
-            <p style="font-size:0.75rem; color:#777; margin-top:0.5rem;">Net Content: <strong>1 Liter</strong></p>
+            <p style="font-size:0.75rem; color:#777; margin-top:0.5rem; margin-bottom:1rem;">Net Content: <strong>1 Liter</strong></p>
+            <button class="btn btn-primary buy-now-trigger" data-id="adw-1L" data-name="Adwait Pure Desi Ghee" data-price="2500" data-weight="1L" data-image="images/ghee_jar.jpg?v=3" style="width: 100%; border-radius: var(--border-radius-full); font-size: 0.85rem; padding: 0.6rem 1rem;">Buy Now</button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Daily Ghee Intake Calculator Section -->
-  <section class="section-padding" style="background-color: var(--color-white); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
-    <div class="container grid-2" style="align-items: center;">
-      <div class="reveal">
-        <span class="text-gold" style="font-size: 0.85rem; letter-spacing: 0.15em; font-weight: 600; display: block; margin-bottom: 0.5rem;">AYURVEDIC WELLNESS CALCULATOR</span>
-        <h2 style="font-size: 2.5rem; font-family: var(--font-serif); margin-bottom: 1.5rem;">Find Your Daily Ghee Prescription</h2>
-        <p style="color: #555; margin-bottom: 1.5rem;">
-          In Ayurveda, Desi Ghee is a therapeutic carrier (Anupana) for nutrients. However, the ideal quantity varies based on your body weight, physical exertion, and health intentions. 
-        </p>
-        <p style="color: #666; font-size: 0.95rem; margin-bottom: 2rem;">
-          Use our interactive Ayurvedic calculator to discover your recommended dosage, ideal consumption timing, and therapeutic benefits tailored to your body configuration.
-        </p>
-      </div>
 
-      <!-- Calculator Form Component -->
-      <div class="reveal-scale" style="background-color: var(--color-bg); border: 1px solid var(--color-primary); border-radius: var(--border-radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-premium);">
-        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; color: var(--color-dark);">Dosage Calculator</h3>
-        
-        <form id="ghee-calc-form">
-          <div class="grid-2" style="gap: var(--spacing-sm); margin-bottom: 1rem;">
-            <div class="form-group">
-              <label for="calc-weight" class="form-label">Body Weight (kg)</label>
-              <input type="number" id="calc-weight" class="form-control" value="65" min="20" max="150" required>
-            </div>
-            <div class="form-group">
-              <label for="calc-age" class="form-label">Age Group</label>
-              <select id="calc-age" class="form-control" style="background: white;">
-                <option value="child">Child (under 12)</option>
-                <option value="adult" selected>Adult (12 - 60)</option>
-                <option value="senior">Senior (60+)</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-group" style="margin-bottom: 1.5rem;">
-            <label for="calc-activity" class="form-label">Daily Physical Exertion</label>
-            <select id="calc-activity" class="form-control" style="background: white;">
-              <option value="sedentary">Sedentary (Desk bound / light walks)</option>
-              <option value="moderate" selected>Moderate (Active routine / gym 3x)</option>
-              <option value="active">Active (Heavy training / sports / manual labor)</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: var(--border-radius-full); margin-bottom: 1.5rem;">Calculate Prescription</button>
-        </form>
-
-        <!-- Result Box -->
-        <div id="calc-result" style="display: none; background: white; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); text-align: center; border-left: 4px solid var(--color-primary);">
-          <p style="font-size: 0.85rem; color: #777; text-transform: uppercase; letter-spacing: 0.1em;">Recommended Daily Intake</p>
-          <h4 id="calc-dosage" style="font-size: 1.8rem; color: var(--color-primary); margin: 0.5rem 0; font-family: var(--font-serif); font-weight: 700;">10 grams (2 Teaspoons)</h4>
-          <p id="calc-timing" style="font-size: 0.9rem; color: var(--color-dark); font-weight: 500; margin-bottom: 0.5rem;"></p>
-          <small id="calc-benefit" style="font-size: 0.8rem; color: #666; display: block; line-height: 1.4;"></small>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Process Timeline Preview -->
   <section class="section-padding" style="background-color: var(--color-bg); overflow: hidden; position: relative;">
@@ -293,33 +385,36 @@
         </div>
       </div>
       
-      <a href="process.html" class="btn btn-outline-gold">Detailed Step-by-Step Illustration</a>
+
     </div>
   </section>
 
   <!-- Testimonials / Customer Reviews -->
-  <section class="section-padding" style="background-color: var(--color-white); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <section class="section-padding" style="background-color: var(--color-white); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); overflow: hidden;">
     <div class="container text-center">
       <div class="royal-header-frame">
         <span class="text-gold" style="font-size: 0.85rem; letter-spacing: 0.15em; font-weight: 600; display: block; margin-bottom: 0.5rem;">VOICES OF SATISFACTION</span>
         <h2 style="font-size: 2.8rem; font-family: var(--font-serif); color: var(--color-dark);">Ayurvedic Testimonials</h2>
       </div>
       
-      <div class="grid-3">
-        <div class="reveal reveal-delay-1 royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
-          <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
-          <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"The texture is beautifully granular (Danedaar) and the aroma takes me back to my grandmother's farm in Punjab. Incredible purity."</p>
-          <strong style="font-size: 0.85rem; color: var(--color-dark);">— Dr. Rajesh K., Ayurvedic Practitioner</strong>
-        </div>
-        <div class="reveal reveal-delay-2 royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
-          <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
-          <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"My children digest this ghee without any issues. The fact that it comes from Desi cows set in curd via wooden Bilona is the reason."</p>
-          <strong style="font-size: 0.85rem; color: var(--color-dark);">— Preeti Sharma, Homemaker</strong>
-        </div>
-        <div class="reveal reveal-delay-3 royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
-          <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
-          <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"An organic masterpiece. Outstanding glass jar packaging and robust shipping. The taste is rich, nutty and completely authentic."</p>
-          <strong style="font-size: 0.85rem; color: var(--color-dark);">— Vikram Malhotra, Michelin Chef</strong>
+      <!-- Horizontal Draggable Testimonials Strip Wrapper -->
+      <div class="testimonials-strip-wrapper">
+        <div class="testimonials-strip-track">
+          <div class="royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
+            <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
+            <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"The texture is beautifully granular (Danedaar) and the aroma takes me back to my grandmother's farm in Punjab. Incredible purity."</p>
+            <strong style="font-size: 0.85rem; color: var(--color-dark);">— Dr. Rajesh K., Ayurvedic Practitioner</strong>
+          </div>
+          <div class="royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
+            <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
+            <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"My children digest this ghee without any issues. The fact that it comes from Desi cows set in curd via wooden Bilona is the reason."</p>
+            <strong style="font-size: 0.85rem; color: var(--color-dark);">— Preeti Sharma, Homemaker</strong>
+          </div>
+          <div class="royal-glass-card" style="padding: var(--spacing-md); text-align: left;">
+            <div style="color: var(--color-accent); font-size: 0.9rem; margin-bottom: 0.5rem;">★★★★★</div>
+            <p style="font-size: 0.9rem; font-style: italic; color: #555; margin-bottom: var(--spacing-sm);">"An organic masterpiece. Outstanding glass jar packaging and robust shipping. The taste is rich, nutty and completely authentic."</p>
+            <strong style="font-size: 0.85rem; color: var(--color-dark);">— Vikram Malhotra, Michelin Chef</strong>
+          </div>
         </div>
       </div>
     </div>
@@ -355,7 +450,10 @@
           </div>
           <p id="qv-desc" style="font-size: 0.9rem; color: #555; margin-bottom: 1.5rem; line-height: 1.4;">Description content...</p>
           
-          <button id="qv-add-btn" class="btn btn-primary" style="width: 100%; border-radius: var(--border-radius-full);">Add to Bag</button>
+          <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <button id="qv-add-btn" class="btn btn-secondary" style="flex: 1; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: var(--border-radius-full); padding: 0.8rem; background: transparent;">Add to Bag</button>
+            <button id="qv-buy-btn" class="btn btn-primary" style="flex: 1; border-radius: var(--border-radius-full); padding: 0.8rem;">Buy Now</button>
+          </div>
         </div>
       </div>
     </div>
@@ -396,7 +494,7 @@
       </div>
       <div>
         <h4 class="footer-title">Contact Office</h4>
-        <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 0.5rem;">Adwait Organic Farms,<br>Sector 4, Pune - 411001</p>
+        <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 0.5rem;">Adwait Organic Farms,<br>Sector 4, Mumbai, Maharashtra - 400001</p>
         <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 0.5rem;">Email: info@adwaitpureghee.com</p>
         <p style="font-size: 0.9rem; color: #a49185; margin-bottom: 1.5rem;">Phone: +91-98765 43210</p>
         
@@ -433,56 +531,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=44"></script>
-  <script src="js/cart.js?v=44"></script>
-  <script src="js/analytics.js?v=44"></script>
+  <script src="js/main.js?v=51"></script>
+  <script src="js/cart.js?v=50"></script>
+  <script src="js/analytics.js?v=50"></script>
   
-  <!-- Custom Daily Intake Calculator Script (Modular integration inside main.js would be ideal, but here we bind form submit directly via main JS call) -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const calcForm = document.querySelector('#ghee-calc-form');
-      if (calcForm) {
-        calcForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const weight = parseFloat(document.getElementById('calc-weight').value);
-          const age = document.getElementById('calc-age').value;
-          const activity = document.getElementById('calc-activity').value;
-          
-          let baseGrams = 10; // 2 teaspoons base
-          
-          // Weight adjustments
-          if (weight > 80) baseGrams += 5;
-          else if (weight < 45) baseGrams -= 2;
-          
-          // Age adjustments
-          if (age === 'child') baseGrams = Math.min(baseGrams, 7); // Kids take less dosage
-          if (age === 'senior') baseGrams = Math.max(5, baseGrams - 2); // Seniors take less
-          
-          // Activity adjustments
-          if (activity === 'active') baseGrams += 5;
-          if (activity === 'sedentary') baseGrams = Math.max(5, baseGrams - 3);
 
-          const tsp = Math.round(baseGrams / 5);
-          
-          let timing = 'Ideal Timing: Consume in the morning on an empty stomach with warm water.';
-          if (activity === 'active') {
-            timing = 'Ideal Timing: Consume post-workout with meals or warm milk before sleep.';
-          }
-          
-          let benefit = 'Therapeutic Benefit: Enhances Agni (digestion fire), lubricates joint cartilage, and improves skin radiance.';
-          if (age === 'child') {
-            benefit = 'Therapeutic Benefit: Promotes Ojas (vitality), supports memory consolidation, and builds bone density.';
-          } else if (age === 'senior') {
-            benefit = 'Therapeutic Benefit: Relieves Vata dryness, enhances joint mobility, and maintains healthy bowel elimination.';
-          }
-
-          document.getElementById('calc-dosage').textContent = `${baseGrams} grams (${tsp} Teaspoon${tsp > 1 ? 's' : ''})`;
-          document.getElementById('calc-timing').textContent = timing;
-          document.getElementById('calc-benefit').textContent = benefit;
-          document.getElementById('calc-result').style.display = 'block';
-        });
-      }
-    });
-  </script>
 </body>
 </html>

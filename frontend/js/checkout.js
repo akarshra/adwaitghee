@@ -2,6 +2,8 @@
 localStorage.removeItem('applied_coupon');
 sessionStorage.removeItem('applied_coupon');
 
+window.COUPONS = window.COUPONS || { 'PURE20': 0.20, 'BILONA10': 0.10, 'AKARSH10': 0.10 };
+
 document.addEventListener('DOMContentLoaded', () => {
   // Validate cart is not empty
   const cartData = JSON.parse(localStorage.getItem('adwait_cart')) || [];
@@ -10,6 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'shop.html';
     return;
   }
+
+  // Load dynamic coupons from database
+  fetch('backend/get-coupons.php')
+    .then(res => res.json())
+    .then(data => {
+      if (data.success && data.coupons) {
+        window.COUPONS = data.coupons;
+        initCheckoutPage();
+      }
+    })
+    .catch(err => console.error("Could not load coupons:", err));
 
   initCheckoutPage();
   initShiprocketPincodeCheck();
@@ -149,14 +162,13 @@ function initCheckoutPage() {
           return;
         }
 
-        const COUPONS = { 'PURE20': 0.20, 'BILONA10': 0.10, 'AKARSH10': 0.10 };
-        if (COUPONS.hasOwnProperty(code)) {
+        if (window.COUPONS.hasOwnProperty(code.toUpperCase())) {
           // Clear old localStorage to prevent auto-fill pollution
           localStorage.removeItem('applied_coupon');
           sessionStorage.setItem('applied_coupon', code);
           feedback.style.display = 'block';
           feedback.style.color = '#27803B';
-          feedback.textContent = `✓ Promo code "${code}" applied (${Math.round(COUPONS[code]*100)}% Off)!`;
+          feedback.textContent = `✓ Promo code "${code}" applied (${Math.round(window.COUPONS[code]*100)}% Off)!`;
           setTimeout(() => {
             initCheckoutPage();
           }, 800);
@@ -177,8 +189,7 @@ function getCartCalculationsFromStore(cartData) {
   
   const subtotal = cartData.reduce((total, item) => total + (item.price * item.quantity), 0);
   const couponCode = sessionStorage.getItem('applied_coupon') || '';
-  const COUPONS = { 'PURE20': 0.20, 'BILONA10': 0.10, 'AKARSH10': 0.10 };
-  const discountRate = COUPONS[couponCode.toUpperCase()] || 0;
+  const discountRate = window.COUPONS[couponCode.toUpperCase()] || 0;
   const discountAmount = subtotal * discountRate;
   
   const taxableAmount = subtotal - discountAmount;
@@ -270,7 +281,7 @@ function getMockCityState(firstDigit) {
     case '7': return { state: 'West Bengal', city: 'Kolkata' };
     case '8': return { state: 'Bihar', city: 'Patna' };
     case '9': return { state: 'Jammu & Kashmir', city: 'Srinagar' };
-    default: return { state: 'Maharashtra', city: 'Pune' };
+    default: return { state: 'Maharashtra', city: 'Mumbai' };
   }
 }
 

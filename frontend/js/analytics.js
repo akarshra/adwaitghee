@@ -42,9 +42,9 @@ function injectStructuredData() {
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Organic Farm Estate, Bilona Sector",
-        "addressLocality": "Pune",
+        "addressLocality": "Mumbai",
         "addressRegion": "Maharashtra",
-        "postalCode": "411001",
+        "postalCode": "400001",
         "addressCountry": "IN"
       },
       "sameAs": [
@@ -124,7 +124,7 @@ function injectStructuredData() {
         "name": "What is the shelf life of Adwait Desi Ghee?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Due to our traditional cooking process, our ghee is highly stable and has a shelf life of up to 12 months at room temperature."
+          "text": "Due to our traditional cooking process, our ghee is highly stable and has a shelf life of 6 to 8 months at room temperature."
         }
       }]
     };

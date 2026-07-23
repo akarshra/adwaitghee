@@ -84,7 +84,10 @@ function initCheckoutPage() {
             <img src="${item.img}" alt="${item.name}" style="width: 48px; height: 48px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(231,180,83,0.15); background: var(--color-bg);">
             <div>
               <p style="font-weight: 600; color: var(--color-dark); margin: 0; font-size: 0.9rem;">${item.name}</p>
-              <p style="font-size: 0.75rem; color: #777; margin: 0.1rem 0 0 0;">${item.weight} × ${item.quantity}</p>
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.15rem;">
+                <span style="font-size: 0.75rem; color: #777;">${item.weight} × ${item.quantity}</span>
+                <button type="button" class="remove-item-btn" data-id="${item.id}" data-weight="${item.weight}" style="background: none; border: none; padding: 0; color: #dc3545; font-size: 0.7rem; cursor: pointer; text-decoration: underline; margin-left: 0.5rem; font-weight: 500; font-family: var(--font-sans);">Remove</button>
+              </div>
             </div>
           </div>
           <span style="font-weight: 600; color: var(--color-dark);">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
@@ -94,8 +97,12 @@ function initCheckoutPage() {
 
     <!-- Promo Code Form -->
     <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-      <input type="text" id="checkout-coupon-input" placeholder="Promo Code" value="${calcs.couponCode}" style="flex-grow: 1; padding: 0.6rem 1rem; border: 1px solid rgba(56, 9, 1, 0.15); border-radius: var(--border-radius-full); font-size: 0.85rem; text-transform: uppercase; outline: none; width: 100%;">
-      <button type="button" id="checkout-coupon-btn" class="btn btn-outline-gold" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: var(--border-radius-full); cursor: pointer;">Apply</button>
+      <input type="text" id="checkout-coupon-input" placeholder="Promo Code" value="${calcs.couponCode}" style="flex-grow: 1; padding: 0.6rem 1rem; border: 1px solid rgba(56, 9, 1, 0.15); border-radius: var(--border-radius-full); font-size: 0.85rem; text-transform: uppercase; outline: none; width: 100%;" ${calcs.couponCode ? 'disabled' : ''}>
+      ${calcs.couponCode ? `
+        <button type="button" id="checkout-coupon-remove-btn" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: var(--border-radius-full); cursor: pointer; background: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; color: #dc3545; transition: all 0.3s; white-space: nowrap;">Remove</button>
+      ` : `
+        <button type="button" id="checkout-coupon-btn" class="btn btn-outline-gold" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: var(--border-radius-full); cursor: pointer; white-space: nowrap;">Apply</button>
+      `}
     </div>
     <div id="checkout-coupon-feedback" style="font-size: 0.75rem; margin-top: -0.75rem; margin-bottom: 0.75rem; display: none; font-weight: 500;"></div>
 
@@ -178,9 +185,46 @@ function initCheckoutPage() {
           feedback.textContent = '✕ Invalid promo code. Try "PURE20".';
         }
       }
+
+      if (e.target && e.target.id === 'checkout-coupon-remove-btn') {
+        sessionStorage.removeItem('applied_coupon');
+        localStorage.removeItem('applied_coupon');
+        initCheckoutPage();
+      }
+
+      if (e.target && e.target.classList.contains('remove-item-btn')) {
+        const id = e.target.dataset.id;
+        const weight = e.target.dataset.weight;
+        removeCheckoutItem(id, weight);
+      }
     });
     summaryBox.dataset.listenerAttached = 'true';
   }
+}
+
+function removeCheckoutItem(id, weight) {
+  let cartData = JSON.parse(localStorage.getItem('adwait_cart')) || [];
+  cartData = cartData.filter(c => !(c.id == id && c.weight == weight));
+  localStorage.setItem('adwait_cart', JSON.stringify(cartData));
+  
+  if (typeof cart !== 'undefined') {
+    cart = cartData;
+  }
+  
+  const cartCounters = document.querySelectorAll('.cart-count');
+  const totalQty = cartData.reduce((qty, item) => qty + item.quantity, 0);
+  cartCounters.forEach(counter => {
+    counter.textContent = totalQty;
+    counter.style.display = totalQty > 0 ? 'flex' : 'none';
+  });
+  
+  if (cartData.length === 0) {
+    alert('Your bag is empty! Redirecting to shop.');
+    window.location.href = 'shop.html';
+    return;
+  }
+  
+  initCheckoutPage();
 }
 
 function getCartCalculationsFromStore(cartData) {

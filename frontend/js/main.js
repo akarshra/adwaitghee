@@ -110,22 +110,21 @@ function initMobileMenu() {
   if (menuBtn && navMenu) {
     menuBtn.addEventListener('click', () => {
       const isOpen = navMenu.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
       if (isOpen) {
         overlay.style.opacity = '1';
         overlay.style.visibility = 'visible';
-        menuBtn.innerHTML = '✕';
       } else {
         overlay.style.opacity = '0';
         overlay.style.visibility = 'hidden';
-        menuBtn.innerHTML = '☰';
       }
     });
 
     overlay.addEventListener('click', () => {
       navMenu.classList.remove('open');
+      menuBtn.classList.remove('open');
       overlay.style.opacity = '0';
       overlay.style.visibility = 'hidden';
-      menuBtn.innerHTML = '☰';
     });
   }
 }
@@ -280,7 +279,7 @@ function initNewsletterValidation() {
       }
       
       if (validateEmail(email)) {
-        showSuccessPopup('Thank you! Subscribed to our luxury Ayurvedic log.');
+        showSuccessPopup('Thank you! Subscribed to our luxury Vedic log.');
         input.value = '';
       } else {
         alert('Please enter a valid email address.');

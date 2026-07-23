@@ -37,14 +37,14 @@ function injectStructuredData() {
       "image": "https://adwaitghee.com/images/logo.png",
       "@id": "https://adwaitghee.com/#organization",
       "url": "https://adwaitghee.com",
-      "telephone": "+91-9876543210",
+      "telephone": "+91 7506616655",
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Organic Farm Estate, Bilona Sector",
         "addressLocality": "Mumbai",
         "addressRegion": "Maharashtra",
-        "postalCode": "400001",
+        "postalCode": "400053",
         "addressCountry": "IN"
       },
       "sameAs": [
@@ -170,7 +170,7 @@ function getBreadcrumbs() {
   } else if (path.includes('about.html')) {
     list.push({ name: 'About Brand', url: `${domain}/about.html` });
   } else if (path.includes('blog.html')) {
-    list.push({ name: 'Ayurvedic Blog', url: `${domain}/blog.html` });
+    list.push({ name: 'Vedic Journal Blog', url: `${domain}/blog.html` });
   } else if (path.includes('faq.html')) {
     list.push({ name: 'FAQs', url: `${domain}/faq.html` });
   } else if (path.includes('contact.html')) {

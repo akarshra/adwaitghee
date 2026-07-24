@@ -4,3 +4,4 @@
 .gemini/
 *.log
 docker-compose.override.yml
+frontend/tunnel_url.txt

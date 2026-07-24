@@ -307,7 +307,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .announcement-ticker-item::after {
-  content: '✦';
+  content: '★';
   margin-left: 3rem;
   color: var(--color-dark);
 }
@@ -1395,7 +1395,7 @@ body.hovering-link .luxury-cursor-outline {
 }
 
 .ticker-item::after {
-  content: '✦';
+  content: '★';
   margin-left: 3rem;
   color: var(--color-dark);
 }
@@ -2501,7 +2501,7 @@ body.hovering-link .luxury-cursor-outline {
 }
 
 .royal-header-frame::after {
-  content: "❖ ⚜ ❖";
+  content: "★ ★ ★";
   font-family: var(--font-display);
   font-size: 0.9rem;
   color: var(--color-primary);

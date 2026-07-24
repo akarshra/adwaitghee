@@ -192,7 +192,7 @@ function initCartDrawer() {
           <span>Subtotal</span>
           <span class="drawer-subtotal">₹0.00</span>
         </div>
-        <p style="font-size: 0.8rem; color: #777; margin-bottom: 1rem;">Taxes and shipping calculated at checkout.</p>
+        <p style="font-size: 0.78rem; color: #777; margin-bottom: 1rem; line-height: 1.4;">Taxes and shipping calculated at checkout.<br><span style="color:#d9534f; font-weight: 800; background: rgba(217, 83, 79, 0.06); padding: 5px 8px; border-radius: 4px; display: inline-block; margin-top: 6px; border: 1px solid rgba(217, 83, 79, 0.18); width: 100%; box-sizing: border-box; text-align: center;">★ No Return, No Cancellation & No Refund Policy applies.</span></p>
         <a href="checkout.html" class="btn btn-primary" style="width: 100%; text-align: center;">Proceed to Checkout</a>
       </div>
     `;

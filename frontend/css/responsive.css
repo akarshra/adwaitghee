@@ -58,6 +58,28 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* Royal Subpage Hero Mobile Optimization */
+  .royal-subpage-hero {
+    padding: 5rem 0 3rem 0 !important;
+  }
+
+  .royal-subpage-hero h1 {
+    font-size: 2.2rem !important;
+  }
+
+  .royal-subpage-hero p {
+    font-size: 1.05rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .about-hero {
+    padding: 3.5rem 0 !important;
+  }
+
+  .about-hero h1 {
+    font-size: 2.2rem !important;
+  }
+
   /* Header Mobile Menu */
   .menu-btn {
     display: flex;

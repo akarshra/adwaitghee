@@ -312,8 +312,12 @@ function openAdminPasswordModal(email) {
         <h2 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-dark); text-align: center;">Administrator Portal</h2>
         <p style="font-size: 0.85rem; color: #4a332d; margin-bottom: 1.5rem; text-align: center; line-height: 1.4;">Authorized access only. Please enter your administrator password to proceed.</p>
         
-        <div style="margin-bottom: 1.5rem;">
-          <input type="password" id="admin-password-input" class="form-control" style="background: rgba(18, 5, 2, 0.05); border: 1px solid rgba(231,180,83,0.4); border-radius: var(--border-radius-full); padding: 0.8rem 1.2rem; color: var(--color-dark); width: 100%; box-sizing: border-box;" placeholder="Enter password" required>
+        <div style="margin-bottom: 1.5rem; position: relative;">
+          <input type="password" id="admin-password-input" class="form-control" style="background: rgba(18, 5, 2, 0.05); border: 1px solid rgba(231,180,83,0.4); border-radius: var(--border-radius-full); padding: 0.8rem 3rem 0.8rem 1.2rem; color: var(--color-dark); width: 100%; box-sizing: border-box;" placeholder="Enter password" required>
+          <button id="admin-password-toggle" type="button" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; cursor: pointer; color: var(--color-primary); display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s;">
+            <svg id="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <svg id="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+          </button>
         </div>
         <button id="admin-login-submit-btn" class="btn btn-primary" style="width: 100%; border-radius: var(--border-radius-full); padding: 0.8rem;">Access Dashboard</button>
         <div id="admin-login-error" style="color: #d9383a; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none; font-weight: 500;"></div>
@@ -325,6 +329,21 @@ function openAdminPasswordModal(email) {
     document.getElementById('admin-modal-close').onclick = () => {
       modal.style.display = 'none';
     };
+
+    const passwordInput = document.getElementById('admin-password-input');
+    document.getElementById('admin-password-toggle').onclick = () => {
+      const eyeOpen = document.getElementById('eye-open');
+      const eyeClosed = document.getElementById('eye-closed');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
+      } else {
+        passwordInput.type = 'password';
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
+      }
+    };
   } else {
     modal.style.display = 'flex';
   }
@@ -332,6 +351,9 @@ function openAdminPasswordModal(email) {
   const passwordInput = document.getElementById('admin-password-input');
   const errorDiv = document.getElementById('admin-login-error');
   passwordInput.value = '';
+  passwordInput.type = 'password';
+  document.getElementById('eye-open').style.display = 'block';
+  document.getElementById('eye-closed').style.display = 'none';
   errorDiv.style.display = 'none';
   passwordInput.focus();
   

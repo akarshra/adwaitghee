@@ -7,7 +7,7 @@ $is_logged_in = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_i
 if (isset($_GET['logout'])) {
     $_SESSION['admin_logged_in'] = false;
     session_destroy();
-    header('Location: admin.php');
+    header('Location: index.html');
     exit();
 }
 
@@ -1294,7 +1294,13 @@ if ($is_logged_in) {
         </div>
         <div class="login-field">
           <label for="login-password" class="login-label">Password</label>
-          <input type="password" id="login-password" class="login-input" placeholder="••••••••" required>
+          <div style="position: relative;">
+            <input type="password" id="login-password" class="login-input" style="padding-right: 3rem;" placeholder="••••••••" required>
+            <button id="login-password-toggle" type="button" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; cursor: pointer; color: var(--color-primary); display: flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s;">
+              <svg id="login-eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg id="login-eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            </button>
+          </div>
         </div>
         
         <button type="submit" id="login-submit-btn" class="btn-login">Access Dashboard</button>
@@ -1346,6 +1352,21 @@ if ($is_logged_in) {
         errorMsg.style.display = 'block';
       });
     }
+
+    document.getElementById('login-password-toggle').onclick = () => {
+      const passwordInput = document.getElementById('login-password');
+      const eyeOpen = document.getElementById('login-eye-open');
+      const eyeClosed = document.getElementById('login-eye-closed');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
+      } else {
+        passwordInput.type = 'password';
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
+      }
+    };
   </script>
   <?php endif; ?>
 </body>
